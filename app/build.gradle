@@ -26,7 +26,8 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.1'
     compile 'com.makeramen:roundedimageview:2.2.0'
     compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'cz.msebera.android:httpclient:4.3.6'
+    compile 'com.google.code.gson:gson:2.5'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 repositories {
