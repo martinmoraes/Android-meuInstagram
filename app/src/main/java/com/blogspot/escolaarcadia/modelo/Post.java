@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Post {
     private String id;
     private String texto;
+    private String titulo;
     private String imagemUrl;
 
     public Post() {
@@ -33,7 +34,7 @@ public class Post {
     }
 
     public String getTexto() {
-        return texto;
+        return titulo;
     }
 
     public void setTexto(String texto) {
@@ -46,5 +47,14 @@ public class Post {
 
     public void setImagemUrl(String imagemUrl) {
         this.imagemUrl = imagemUrl;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+        this.texto = titulo;
     }
 }

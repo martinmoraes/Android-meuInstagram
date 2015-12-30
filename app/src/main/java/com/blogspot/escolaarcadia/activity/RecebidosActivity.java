@@ -107,7 +107,6 @@ public class RecebidosActivity extends Activity {
 
     }
 
-
     @Override
     public void onResume(){
         super.onResume();
