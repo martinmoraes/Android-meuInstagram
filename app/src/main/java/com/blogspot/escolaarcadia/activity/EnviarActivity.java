@@ -113,12 +113,14 @@ public class EnviarActivity extends Activity {
                     Comunicacao.urlEnviaPOST,
                     params,
                     new AsyncHttpResponseHandler() {
-                        public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             Comunicacao.setNovoPost();
                             Toast.makeText(getApplication(), "Postado", Toast.LENGTH_LONG).show();
                         }
 
-                        public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             Toast.makeText(getApplication(), "Falha de comunicação!!!\n" + error.toString(), Toast.LENGTH_LONG).show();
                         }
                     });

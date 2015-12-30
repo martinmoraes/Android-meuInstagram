@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.escolaarcadia.modelo.Post;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
@@ -29,8 +30,6 @@ import com.blogspot.escolaarcadia.Comunicacao;
 import br.com.escolaarcadia.meusfilmes.R;
 import cz.msebera.android.httpclient.Header;
 
-import com.blogspot.escolaarcadia.modelo.Filme;
-import com.blogspot.escolaarcadia.modelo.Genero;
 
 /**
  * Created by Martin on 25/08/2015.
@@ -38,23 +37,23 @@ import com.blogspot.escolaarcadia.modelo.Genero;
 public class CustomListAdaptador extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<Filme> filmeItens;
+    private List<Post> postItens;
     private boolean emRequisicao = false;
     private boolean povoaLocal = false;
 
     public CustomListAdaptador(Context context) {
         this.context = context;
-        filmeItens = new ArrayList<Filme>();
+        postItens = new ArrayList<Post>();
     }
 
     @Override
     public int getCount() {
-        return filmeItens.size();
+        return postItens.size();
     }
 
     @Override
     public Object getItem(int location) {
-        return filmeItens.get(location);
+        return postItens.get(location);
     }
 
     @Override
@@ -71,29 +70,23 @@ public class CustomListAdaptador extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
             convertView = inflater.inflate(R.layout.linha, null);
-        TextView tvTitulo = (TextView) convertView.findViewById(R.id.titulo);
         TextView tvId = (TextView) convertView.findViewById(R.id.id);
-        TextView tvNota = (TextView) convertView.findViewById(R.id.nota);
-        TextView tvGenero = (TextView) convertView.findViewById(R.id.genero);
-        TextView tvAno = (TextView) convertView.findViewById(R.id.ano);
-        TextView imagemURL = (TextView) convertView.findViewById(R.id.imagemURL);
-        ImageView iv = (ImageView) convertView.findViewById(R.id.imagem);
+        TextView tvTexto = (TextView) convertView.findViewById(R.id.textView);
+        TextView tvImagemURL = (TextView) convertView.findViewById(R.id.imagemURL);
+        ImageView iv = (ImageView) convertView.findViewById(R.id.imageView);
 
-        // Pega o filme para uma linha
-        Filme filme = filmeItens.get(position);
+        // Pega o post para uma linha
+        Post post = postItens.get(position);
 
 
         // Imagem
         if (povoaLocal) {
             Context context = convertView.getContext();
-            int img = context.getResources().getIdentifier(filme.getImagemUrl(), "mipmap", context.getPackageName());
+            int img = context.getResources().getIdentifier(post.getImagemUrl(), "mipmap", context.getPackageName());
             iv.setImageResource(img);
             Log.d("MEU_APP", "img: "+ img);
-            imagemURL.setText("MEU APP LOCAL:" + img);
         } else {
-            String img = Comunicacao.urlConsulta + filme.getImagemUrl();
-            imagemURL.setText(img);
-
+            String img = Comunicacao.urlConsulta + post.getImagemUrl();
             Picasso.with(context)
                     .load(img)
                     .error(R.mipmap.foto)
@@ -101,28 +94,23 @@ public class CustomListAdaptador extends BaseAdapter {
         }
 
         // ID
-        tvId.setText(filme.getId());
+        tvId.setText(post.getId());
 
-        // Titulo
-        tvTitulo.setText(filme.getTitulo());
+        // Texto
+        tvTexto.setText(post.getTexto());
 
-        // Nota
-        tvNota.setText("Nota: " + filme.getNotaSTR());
+        // imagemURL
+        tvImagemURL.setText(post.getImagemUrl());
 
-        // Genero
-        tvGenero.setText(filme.getGeneroSTR());
-
-        // Ano
-        tvAno.setText(filme.getAnoSTR());
 
         //
         //Verifica se precisa fazer nova requisição
         //
       /*  if (Comunicacao.limiteParaRequestAntigos == position) {
-            this.fazRequisicao(filme.getId(), Comunicacao.DIRECAO_ANTIGOS);
+            this.fazRequisicao(post.getId(), Comunicacao.DIRECAO_ANTIGOS);
         }
         if (Comunicacao.limiteParaRequestNovos == position) {
-            this.fazRequisicao(filme.getId(), Comunicacao.DIRECAO_NOVOS);
+            this.fazRequisicao(post.getId(), Comunicacao.DIRECAO_NOVOS);
         }*/
         return convertView;
     }
@@ -146,26 +134,26 @@ public class CustomListAdaptador extends BaseAdapter {
                                 Gson gson = new GsonBuilder().create();
                                 int qtdeReg = response.length();
                                 if (qtdeReg > 0) {
-                                    ArrayList<Filme> novaLista = new ArrayList<Filme>();
+                                    ArrayList<Post> novaLista = new ArrayList<Post>();
                                     for (int i = 0; i < qtdeReg; i++) {
                                         try {
                                             String obj = response.getJSONObject(i).toString();
-                                            Filme umFilme = gson.fromJson(obj, Filme.class);
-                                            novaLista.add(umFilme);
+                                            Post umPost = gson.fromJson(obj, Post.class);
+                                            novaLista.add(umPost);
                                         } catch (JSONException e) {
                                             Log.e("MEU_APP", "onSuccess - JSONException: " + e.toString());
                                         }
                                     }
                                     if (Comunicacao.DIRECAO_ANTIGOS.equals(direcao)) {
-                                        filmeItens.addAll(novaLista);
+                                        postItens.addAll(novaLista);
                                     } else if (Comunicacao.DIRECAO_NOVOS.equals(direcao)) {
-                                        filmeItens.addAll(0, novaLista);
+                                        postItens.addAll(0, novaLista);
                                     } else if (Comunicacao.DIRECAO_ULTIMOS.equals(direcao)) {
-                                        filmeItens = novaLista;
+                                        postItens = novaLista;
                                     }
                                     notifyDataSetChanged();
                                 } else {
-                                    Toast.makeText(context, "Nenhum registro encontrado", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, "Nenhum registro encontrado", Toast.LENGTH_SHORT).show();
                                 }
                                 emRequisicao = false;
                             }
@@ -202,9 +190,9 @@ public class CustomListAdaptador extends BaseAdapter {
     }
 
     public void excluiPost(String idFilme) {
-        for (Filme oFilme : filmeItens) {
-            if (oFilme.getId().equals(idFilme)) {
-                filmeItens.remove(oFilme);
+        for (Post oPost : postItens) {
+            if (oPost.getId().equals(idFilme)) {
+                postItens.remove(oPost);
                 this.notifyDataSetChanged();
                 break;
             }
@@ -216,18 +204,16 @@ public class CustomListAdaptador extends BaseAdapter {
         ProgressDialog progres = ProgressDialog.show(context, "Carregando dados", "Abrindo localmente...");
         Toast.makeText(context, "Não alcançou o servidor mostrando versão exemplo.", Toast.LENGTH_LONG).show();
 
-        ArrayList<Genero> genero = new ArrayList<Genero>();
-        genero.add(new Genero("MEU APP LOCAL"));
-        filmeItens.add(new Filme("1", "camera", "camera", 2015, 8.5, genero));
-        filmeItens.add(new Filme("2", "enviarbranco", "enviarbranco", 2015, 8.5, genero));
-        filmeItens.add(new Filme("3", "foto", "foto", 2015, 8.5, genero));
-        filmeItens.add(new Filme("4", "fotobranco", "fotobranco", 2015, 8.5, genero));
-        filmeItens.add(new Filme("5", "galeriabranco", "galeriabranco", 2015, 8.5, genero));
-        filmeItens.add(new Filme("6", "ico", "ico", 2015, 8.5, genero));
-        filmeItens.add(new Filme("7", "filmeItens", "lista", 2015, 8.5, genero));
-        filmeItens.add(new Filme("8", "perfil", "perfil", 2015, 8.5, genero));
+        postItens.add(new Post("1", "camera", "camera"));
+        postItens.add(new Post("2", "enviarbranco", "enviarbranco"));
+        postItens.add(new Post("3", "foto", "foto"));
+        postItens.add(new Post("4", "fotobranco", "fotobranco"));
+        postItens.add(new Post("5", "galeriabranco", "galeriabranco"));
+        postItens.add(new Post("6", "ico", "ico"));
+        postItens.add(new Post("7", "postItens", "lista"));
+        postItens.add(new Post("8", "perfil", "perfil"));
         progres.dismiss();
-        Log.d("MEU_APP", "povoaLocal() - Povoada a filmeItens local");
+        Log.d("MEU_APP", "povoaLocal() - Povoada a postItens local");
         notifyDataSetChanged();
     }
 }

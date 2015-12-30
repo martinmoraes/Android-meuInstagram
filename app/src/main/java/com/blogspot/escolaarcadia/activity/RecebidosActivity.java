@@ -43,44 +43,40 @@ public class RecebidosActivity extends Activity {
 
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view, final int position, long id) {
-                String titulo = ((TextView) view.findViewById(R.id.titulo)).getText().toString();
-                final String idFilme = ((TextView) view.findViewById(R.id.id)).getText().toString();
+                final String idPost = ((TextView) view.findViewById(R.id.id)).getText().toString();
 
                 AlertDialog.Builder alertaBuilder = new AlertDialog.Builder(context);
                 alertaBuilder.setTitle("Faça sua Escolha");
-                alertaBuilder.setMessage(titulo);
 
                 alertaBuilder.setPositiveButton("Excluir",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
-
                                 if (Comunicacao.isConectado(context)) {
                                     AsyncHttpClient client = new AsyncHttpClient();
                                     RequestParams param = new RequestParams();
-                                    param.put("id", idFilme);
+                                    param.put("id", idPost);
                                     client.get(Comunicacao.urlExcluiPOST,
                                             param,
                                             new AsyncHttpResponseHandler() {
                                                 @Override
                                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                                    Toast.makeText(context, (new String(responseBody)), Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(context, (new String(responseBody)), Toast.LENGTH_SHORT).show();
                                                     view.animate().setDuration(1500).alpha(0)
                                                             .withEndAction(new Runnable() {
                                                                 @Override
                                                                 public void run() {
                                                                     view.setAlpha(1);
-                                                                    adaptador.excluiPost(idFilme);
+                                                                    adaptador.excluiPost(idPost);
                                                                 }
                                                             });
                                                 }
-
                                                 @Override
                                                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                                    Toast.makeText(context, "Falha de comunicação!!!", Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(context, "Falha de comunicação!!!", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                 } else {
-                                    Toast.makeText(context, "Sem conexão externa", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, "Sem conexão externa", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -88,11 +84,7 @@ public class RecebidosActivity extends Activity {
                 alertaBuilder.setNegativeButton("ABRIR",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
-                                String msg =
-                                        ((TextView) view.findViewById(R.id.titulo)).getText().toString() + " Nota:" +
-                                        ((TextView) view.findViewById(R.id.nota)).getText().toString() + "\n Genero:" +
-                                        ((TextView) view.findViewById(R.id.genero)).getText().toString() + " Ano:" +
-                                        ((TextView) view.findViewById(R.id.ano)).getText().toString();
+                                String msg = ((TextView) view.findViewById(R.id.textView)).getText().toString();
                                 String url = (((TextView) view.findViewById(R.id.imagemURL)).getText().toString());
                                 Intent intent = new Intent(context, MostraPostActivity.class);
                                 intent.putExtra("MSG", msg);
@@ -104,7 +96,6 @@ public class RecebidosActivity extends Activity {
                 alertaBuilder.setNeutralButton("CANCELAR",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
-                                Log.d("MEU_APP", "Entoru no onClick do setNeutralButton do RecebidosActivity - CANCELAR");
                                 Toast.makeText(context, "Operação cancelada", Toast.LENGTH_SHORT).show();
                             }
                         });
