@@ -1,174 +1,106 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context="com.blogspot.escolaarcadia.activity.EnviarActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="br.com.escolaarcadia.meuinstagram.activity.EnviarActivity">
 
 
     <!-- Imagem -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="6">
+        android:layout_height="match_parent"
+        android:layout_weight="4">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:padding="120dp"
             android:background="#CCCCCC"
-            android:onClick="bateFoto"
-
-            android:src="@mipmap/fotobranco"/>
+            android:src="@mipmap/fotobranco"
+            android:onClick="bateFoto"/>
     </LinearLayout>
 
     <!-- Botões Foto e Galeria -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#CCCCCC"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:layout_weight="11"
+        android:orientation="horizontal"
+        android:background="#CCCCCC">
+
+        <!-- Bt Foto -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
             <ImageButton
                 android:id="@+id/btBateFoto"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/botaoradius"
                 android:onClick="bateFoto"
-                android:src="@mipmap/fotobranco"
-                android:layout_weight="1"/>
+                android:padding="5dp"
+                android:src="@mipmap/fotobranco" />
+        </LinearLayout>
+
+        <!-- Bt Galeria -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
             <ImageButton
                 android:id="@+id/btGaleria"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/botaoradius"
                 android:onClick="abreGaleria"
-                android:src="@mipmap/galeriabranco"
-                android:layout_weight="1"/>
-
+                android:padding="5dp"
+                android:src="@mipmap/galeriabranco" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Texto de envio -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_weight="10">
 
-        <!-- Título -->
-        <LinearLayout
+        <EditText
+            android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tvtitulo"
-                android:layout_weight="4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/titulo"
-                android:textStyle="bold"/>
-            <EditText
-                android:id="@+id/titulo"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:hint="@string/digite"
-                android:textSize="15dp"/>
-        </LinearLayout>
-
-        <!-- Pontuação -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tvpontos"
-                android:layout_weight="4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/pontos"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:id="@+id/pontos"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:hint="@string/digite"
-                android:textSize="15dp"/>
-        </LinearLayout>
-
-        <!-- Genero -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tvgenero"
-                android:layout_weight="4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/genero"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:id="@+id/genero"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:hint="@string/digite"
-                android:textSize="15dp"/>
-        </LinearLayout>
-
-        <!-- Ano -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tvano"
-                android:layout_weight="4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/ano"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:id="@+id/ano"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:hint="@string/digite"
-                android:textSize="15dp"/>
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="top|left"
+            android:hint="Digite aqui..."
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:minLines="1"
+            android:scrollHorizontally="false"
+            android:scrollbars="vertical"
+            android:textColorHint="#cccccc" />
     </LinearLayout>
 
     <!-- Bt Enviar -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_weight="11"
+        android:gravity="center">
+
 
         <Button
             android:id="@+id/btEnvia"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/degradeazul"
-            android:onClick="enviaMenssagem"
             style="@style/BotaoEnviar"
-            android:text="@string/postar"/>
+            android:onClick="enviaMenssagem"
+            android:background="@drawable/degradeazul"
+            android:text="Postar!"></Button>
     </LinearLayout>
 
 

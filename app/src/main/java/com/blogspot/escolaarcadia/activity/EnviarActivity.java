@@ -13,11 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.blogspot.escolaarcadia.Comunicacao;
+import com.blogspot.escolaarcadia.UserPicture;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
-import org.apache.http.Header;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,32 +25,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
-import com.blogspot.escolaarcadia.Comunicacao;
 import br.com.escolaarcadia.meusfilmes.R;
-import com.blogspot.escolaarcadia.UserPicture;
+import cz.msebera.android.httpclient.Header;
+
 
 public class EnviarActivity extends Activity {
     private ImageView imagemView;
     private Bitmap imagemBitmap;
-    private EditText edTitulo;
-    private EditText edAno;
-    private EditText edGenero;
-    private EditText edPontos;
+    private EditText editText;
     private Uri fotoURI = null;
-    private final int FOTO_CAMERA = 1;
-    private final int GALERIA_FOTO = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activityenviar);
         imagemView = (ImageView) findViewById(R.id.imageView);
-        edTitulo = (EditText) findViewById(R.id.titulo);
-        edAno = (EditText) findViewById(R.id.ano);
-        edGenero = (EditText) findViewById(R.id.genero);
-        edPontos = (EditText) findViewById(R.id.pontos);
+        editText = (EditText) findViewById(R.id.editText);
     }
 
+    private final int FOTO_CAMERA = 1;
 
     public void bateFoto(View view) {
         String fotoArquivo = UUID.randomUUID().toString() + ".jpg";
@@ -58,17 +52,23 @@ public class EnviarActivity extends Activity {
         values.put(MediaStore.Images.Media.TITLE, fotoArquivo);
         values.put(MediaStore.Images.Media.DISPLAY_NAME, fotoArquivo);
         values.put(MediaStore.Images.Media.DESCRIPTION, "Uma Foto");
+        //values.put(MediaStore.Images.Media.ORIENTATION,0); //degrees 0, 90, 180, 270
         fotoURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent fotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         fotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, fotoURI);
         startActivityForResult(fotoIntent, FOTO_CAMERA);
     }
 
+    private final int GALERIA_FOTO = 2;
+
     public void abreGaleria(View view) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_PICK);
-        startActivityForResult(Intent.createChooser(intent, "Selecione..."), GALERIA_FOTO);
+        Intent imagemIntent = new Intent();
+        imagemIntent.setType("image/*");
+        imagemIntent.setAction(Intent.ACTION_PICK);
+        // Intent.ACTION_PICK - Só gerenciadores de imagens
+        // Intent.ACTION_GET_CONTENT - Gerenciadores de imagens e de arquivos
+        // imagemIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Para ter mais de uma imagem no retorno
+        startActivityForResult(Intent.createChooser(imagemIntent, "Selecione..."), GALERIA_FOTO);
     }
 
     @Override
@@ -77,13 +77,14 @@ public class EnviarActivity extends Activity {
         UserPicture up = null;
         if (resultCode == RESULT_OK) {
             if (requestCode == FOTO_CAMERA) {
+//                imagemBitmap = (Bitmap) intent.getExtras().get("data");
                 up = new UserPicture(fotoURI, getContentResolver());
             } else if (requestCode == GALERIA_FOTO) {
                 up = new UserPicture(intent.getData(), getContentResolver());
             }
             try {
+                imagemView.setPadding(0, 0, 0, 0);
                 imagemBitmap = up.getBitmap();
-                //imagemView.setPadding(0, 0, 0, 0);
                 imagemView.setImageBitmap(imagemBitmap);
             } catch (IOException e) {
                 Log.e("GALERIA", "Falha ao carregar a imagem.", e);
@@ -93,6 +94,7 @@ public class EnviarActivity extends Activity {
         }
     }
 
+
     public void enviaMenssagem(View view) {
         if (imagemBitmap != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -100,42 +102,36 @@ public class EnviarActivity extends Activity {
             InputStream myInputStream = new ByteArrayInputStream(stream.toByteArray());
             RequestParams params = new RequestParams();
             params.setForceMultipartEntityContentType(true);
-           /* byte[] myByteArray = stream.toByteArray();
-            params.put("arq", new ByteArrayInputStream(myByteArray), "image.png");*/
+            byte[] myByteArray = stream.toByteArray();
+            params.put("profile_picture", new ByteArrayInputStream(myByteArray), "image.png");
 
             params.put("arq", myInputStream);
-            params.put("titulo", edTitulo.getText().toString());
-            params.put("ano", edAno.getText().toString());
-            params.put("nota", edPontos.getText().toString());
-            params.put("genero", edGenero.getText().toString());
+            params.put("titulo", editText.getText().toString());
 
             AsyncHttpClient cliente = new AsyncHttpClient();
             cliente.post(
                     Comunicacao.urlEnviaPOST,
                     params,
                     new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
                             Comunicacao.setNovoPost();
                             Toast.makeText(getApplication(), "Postado", Toast.LENGTH_LONG).show();
                         }
 
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
                             Toast.makeText(getApplication(), "Falha de comunicação!!!\n" + error.toString(), Toast.LENGTH_LONG).show();
                         }
                     });
             Toast.makeText(this, "Enviando.", Toast.LENGTH_SHORT).show();
             imagemBitmap = null;
-            edTitulo.setText("");
-            edAno.setText("");
-            edGenero.setText("");
-            edPontos.setText("");
-            //imagemView.setPadding(220, 220, 220, 220);
+            editText.setText("");
+            imagemView.setPadding(220, 220, 220, 220);
             imagemView.setImageResource(R.mipmap.fotobranco);
 
         } else {
             Toast.makeText(this, "Selecione uma image.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

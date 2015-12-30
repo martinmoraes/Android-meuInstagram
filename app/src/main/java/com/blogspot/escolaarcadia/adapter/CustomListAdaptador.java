@@ -18,7 +18,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
 
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +27,8 @@ import java.util.List;
 
 import com.blogspot.escolaarcadia.Comunicacao;
 import br.com.escolaarcadia.meusfilmes.R;
+import cz.msebera.android.httpclient.Header;
+
 import com.blogspot.escolaarcadia.modelo.Filme;
 import com.blogspot.escolaarcadia.modelo.Genero;
 
