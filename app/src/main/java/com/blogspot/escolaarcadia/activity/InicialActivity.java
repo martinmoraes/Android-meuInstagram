@@ -44,7 +44,7 @@ public class InicialActivity extends TabActivity {
                         break;
                     case "TAB_3":
                         WebView mWebView = (WebView) findViewById(R.id.webview);
-                        mWebView.loadUrl("http://www.unibrasil.com.br");
+                        mWebView.loadUrl("http://www.google.com.br/");
                         break;
                 }
             }

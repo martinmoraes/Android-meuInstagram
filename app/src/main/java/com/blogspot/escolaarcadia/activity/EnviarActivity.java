@@ -102,10 +102,9 @@ public class EnviarActivity extends Activity {
             InputStream myInputStream = new ByteArrayInputStream(stream.toByteArray());
             RequestParams params = new RequestParams();
             params.setForceMultipartEntityContentType(true);
-            byte[] myByteArray = stream.toByteArray();
-            params.put("profile_picture", new ByteArrayInputStream(myByteArray), "image.png");
+            params.put("arq", myInputStream, "image.png");
 
-            params.put("arq", myInputStream);
+            //params.put("arq", myInputStream);
             params.put("titulo", editText.getText().toString());
 
             AsyncHttpClient cliente = new AsyncHttpClient();
