@@ -13,8 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="#CCCCCC"
-            android:src="@mipmap/fotobranco"
-            android:onClick="bateFoto"/>
+            android:src="@mipmap/fotobranco"/>
 
     <!-- Texto de envio -->
         <TextView
@@ -29,17 +28,13 @@
             android:id="@+id/id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:visibility="gone"
-            android:gravity="top|left"/>
+            android:visibility="gone"/>
 
     <!-- imagemURL -->
         <TextView
             android:id="@+id/imagemURL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:visibility="gone"
-            android:gravity="top|left"/>
+            android:visibility="gone"/>
 
 </LinearLayout>

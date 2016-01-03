@@ -78,7 +78,6 @@ public class CustomListAdaptador extends BaseAdapter {
         // Pega o post para uma linha
         Post post = postItens.get(position);
 
-
         // Imagem
         if (povoaLocal) {
             Context context = convertView.getContext();
@@ -87,6 +86,7 @@ public class CustomListAdaptador extends BaseAdapter {
             Log.d("MEU_APP", "img: "+ img);
         } else {
             String img = Comunicacao.urlConsulta + post.getImagemUrl();
+            tvImagemURL.setText(img);
             Picasso.with(context)
                     .load(img)
                     .error(R.mipmap.foto)
@@ -98,10 +98,6 @@ public class CustomListAdaptador extends BaseAdapter {
 
         // Texto
         tvTexto.setText(post.getTexto());
-
-        // imagemURL
-        tvImagemURL.setText(post.getImagemUrl());
-
 
         //
         //Verifica se precisa fazer nova requisição

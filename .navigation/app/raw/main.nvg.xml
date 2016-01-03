@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.blogspot.escolaarcadia.activity.EnviarActivity"/>
+      <point      
+        x = "528"      
+        y = "1948"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.blogspot.escolaarcadia.activity.RecebidosActivity"/>
+      <point      
+        x = "512"      
+        y = "212"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.blogspot.escolaarcadia.activity.InicialActivity"/>
+      <point      
+        x = "1700"      
+        y = "1900"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.blogspot.escolaarcadia.activity.MostraPostActivity"/>
+      <point      
+        x = "1876"      
+        y = "216"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>
