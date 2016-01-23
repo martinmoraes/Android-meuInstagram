@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blogspot.escolaarcadia.adapter.CustomListAdaptador;
 import com.squareup.picasso.Picasso;
 
 import br.com.escolaarcadia.meusfilmes.R;
@@ -26,9 +27,7 @@ public class MostraPostActivity extends Activity {
 
         textView.setText(msg);
 
-        if (url.contains("MEU APP LOCAL")) {
-            url = url.split(":")[1];
-            Log.d("MEU_APP", "Povoando o adapter local");
+        if (CustomListAdaptador.povoaLocal) {
             int img = getResources().getIdentifier(url, "mipmap", getApplicationContext().getPackageName());
             imageView.setImageResource(img);
         } else {

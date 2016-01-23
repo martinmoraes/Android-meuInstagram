@@ -14,12 +14,11 @@
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
+            android:layout_height="0dp"
             android:layout_weight="1">
 
             <LinearLayout
-                android:id="@+id/perfil"
+                android:id="@+id/llweb"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -37,9 +36,9 @@
             android:id="@android:id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:background="#212121">
         </TabWidget>
+
     </LinearLayout>
 
 

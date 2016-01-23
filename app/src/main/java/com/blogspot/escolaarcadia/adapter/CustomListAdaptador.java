@@ -39,11 +39,11 @@ public class CustomListAdaptador extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Post> postItens;
     private boolean emRequisicao = false;
-    private boolean povoaLocal = false;
+    public static boolean povoaLocal = false;
 
     public CustomListAdaptador(Context context) {
         this.context = context;
-        postItens = new ArrayList<Post>();
+        postItens = new ArrayList<>();
     }
 
     @Override
@@ -82,8 +82,8 @@ public class CustomListAdaptador extends BaseAdapter {
         if (povoaLocal) {
             Context context = convertView.getContext();
             int img = context.getResources().getIdentifier(post.getImagemUrl(), "mipmap", context.getPackageName());
+            tvImagemURL.setText(String.valueOf(img));
             iv.setImageResource(img);
-            Log.d("MEU_APP", "img: "+ img);
         } else {
             String img = Comunicacao.urlConsulta + post.getImagemUrl();
             tvImagemURL.setText(img);
@@ -98,6 +98,7 @@ public class CustomListAdaptador extends BaseAdapter {
 
         // Texto
         tvTexto.setText(post.getTexto());
+
 
         //
         //Verifica se precisa fazer nova requisição
