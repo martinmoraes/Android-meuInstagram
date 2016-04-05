@@ -8,10 +8,10 @@ import android.util.Log;
  * Created by Martin on 04/09/2015.
  */
 public class Comunicacao {
-    public static final String urlConsulta = "http://192.168.25.136:8080/filmes/";//"http://192.168.25.136:3002"; //"http://webservice-meuappviral.rhcloud.com/"; //
-    public static final String urlEnviaPOST = urlConsulta + "inserirSRV";
-    public static final String urlExcluiPOST = urlConsulta + "excluirSRV";
-    public static final String urlListarPOST = urlConsulta + "listarSRV";
+    public static final String urlConsulta = "http://appviral.com.br/app/";
+    public static final String urlEnviaPOST = urlConsulta + "inserir.php";
+    public static final String urlExcluiPOST = urlConsulta + "excluir.php";
+    public static final String urlListarPOST = urlConsulta + "listar.php";
 
     public static final String DIRECAO_ANTIGOS = "DIRECAO_ANTIGOS";
     public static final String DIRECAO_NOVOS = "DIRECAO_NOVOS";
@@ -19,10 +19,19 @@ public class Comunicacao {
     
     
     /*
+    Parâmetros de listar
       origem, emJSON
       id, idFilmeInicial
       qtde, Comunicacao.limiteElementos
       direcao, direcao
+
+     Parâmetros de inserir
+        arq, myInputStream, "image.png"
+        titulo, editText.getText().toString()
+
+     Parâmetros de excluir
+        id, idPost
+
      */
 
 

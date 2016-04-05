@@ -60,7 +60,7 @@ public class RecebidosActivity extends Activity {
                                             new AsyncHttpResponseHandler() {
                                                 @Override
                                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                                    Toast.makeText(context, (new String(responseBody)), Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context, getString(R.string.confirma), Toast.LENGTH_SHORT).show();
                                                     view.animate().setDuration(1500).alpha(0)
                                                             .withEndAction(new Runnable() {
                                                                 @Override
@@ -72,6 +72,7 @@ public class RecebidosActivity extends Activity {
                                                 }
                                                 @Override
                                                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                                    Log.i("MEU_APP","statusCode:" + statusCode +"\n error: "+ error.toString());
                                                     Toast.makeText(context, "Falha de comunicação!!!", Toast.LENGTH_SHORT).show();
                                                 }
                                             });

@@ -120,6 +120,7 @@ public class EnviarActivity extends Activity {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            Log.i("MEU_APP","statusCode:" + statusCode +"\n error: "+ error.toString());
                             Toast.makeText(getApplication(), "Falha de comunicação!!!\n" + error.toString(), Toast.LENGTH_LONG).show();
                         }
                     });

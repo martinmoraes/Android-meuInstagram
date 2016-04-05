@@ -99,7 +99,7 @@
             android:id="@+id/btEnvia"
             style="@style/BotaoEnviar"
             android:onClick="enviaMenssagem"
-            android:background="@drawable/degradeazul"
+            android:textColor="@drawable/degradeazul"
             android:text="Postar!"></Button>
     </LinearLayout>
 

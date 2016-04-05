@@ -40,6 +40,7 @@ public class CustomListAdaptador extends BaseAdapter {
     private List<Post> postItens;
     private boolean emRequisicao = false;
     public static boolean povoaLocal = false;
+    public static ProgressDialog progres;
 
     public CustomListAdaptador(Context context) {
         this.context = context;
@@ -71,7 +72,7 @@ public class CustomListAdaptador extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.linha, null);
         TextView tvId = (TextView) convertView.findViewById(R.id.id);
-        TextView tvTexto = (TextView) convertView.findViewById(R.id.textView);
+        TextView tvTexto = (TextView) convertView.findViewById(R.id.texto);
         TextView tvImagemURL = (TextView) convertView.findViewById(R.id.imagemURL);
         ImageView iv = (ImageView) convertView.findViewById(R.id.imageView);
 
@@ -89,7 +90,7 @@ public class CustomListAdaptador extends BaseAdapter {
             tvImagemURL.setText(img);
             Picasso.with(context)
                     .load(img)
-                    .error(R.mipmap.foto)
+                    .error(R.mipmap.fotoazul)
                     .into(iv);
         }
 
@@ -101,7 +102,7 @@ public class CustomListAdaptador extends BaseAdapter {
 
 
         //
-        //Verifica se precisa fazer nova requisição
+        //TODO Verifica se precisa fazer nova requisição
         //
       /*  if (Comunicacao.limiteParaRequestAntigos == position) {
             this.fazRequisicao(post.getId(), Comunicacao.DIRECAO_ANTIGOS);
@@ -122,7 +123,7 @@ public class CustomListAdaptador extends BaseAdapter {
                 param.put("id", idFilmeInicial);
                 param.put("qtde", Comunicacao.limiteElementos);
                 param.put("direcao", direcao);
-                ProgressDialog progres = ProgressDialog.show(context, "Carregando dados", "Aguarde...");
+                progres = ProgressDialog.show(context, "Carregando dados", "Aguarde...");
                 client.get(Comunicacao.urlListarPOST,
                         param,
                         new JsonHttpResponseHandler() {
@@ -153,6 +154,7 @@ public class CustomListAdaptador extends BaseAdapter {
                                     Toast.makeText(context, "Nenhum registro encontrado", Toast.LENGTH_SHORT).show();
                                 }
                                 emRequisicao = false;
+                                progres.dismiss();
                             }
 
                             @Override
@@ -179,7 +181,7 @@ public class CustomListAdaptador extends BaseAdapter {
 
                         });
                 emRequisicao = true;
-                progres.dismiss();
+
             }
         } else {
             this.povoaLocal();
@@ -198,17 +200,19 @@ public class CustomListAdaptador extends BaseAdapter {
 
     private final void povoaLocal() {
         this.povoaLocal = true;
-        ProgressDialog progres = ProgressDialog.show(context, "Carregando dados", "Abrindo localmente...");
         Toast.makeText(context, "Não alcançou o servidor mostrando versão exemplo.", Toast.LENGTH_LONG).show();
 
-        postItens.add(new Post("1", "camera", "camera"));
-        postItens.add(new Post("2", "enviarbranco", "enviarbranco"));
-        postItens.add(new Post("3", "foto", "foto"));
+        postItens.add(new Post("1", "cameracinza", "cameracinza"));
+        postItens.add(new Post("2", "despertarazul", "despertarazul"));
+        postItens.add(new Post("3", "fotoazul", "fotoazul"));
         postItens.add(new Post("4", "fotobranco", "fotobranco"));
         postItens.add(new Post("5", "galeriabranco", "galeriabranco"));
         postItens.add(new Post("6", "ico", "ico"));
-        postItens.add(new Post("7", "postItens", "lista"));
-        postItens.add(new Post("8", "perfil", "perfil"));
+        postItens.add(new Post("7", "listacinza", "listacinza"));
+        postItens.add(new Post("8", "perfilcinza", "perfilcinza"));
+        postItens.add(new Post("9", "romaazul", "romaazul"));
+        postItens.add(new Post("10", "tagcoracaoazul", "tagcoracaoazul"));
+
         progres.dismiss();
         Log.d("MEU_APP", "povoaLocal() - Povoada a postItens local");
         notifyDataSetChanged();

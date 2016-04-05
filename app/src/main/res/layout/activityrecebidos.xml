@@ -10,11 +10,11 @@
     <ListView
         android:id="@+id/lv_lista_de_filmes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:divider="#FAFAFA"
         android:background="#FAFAFA"
-        android:dividerHeight="10.0sp"
+        android:dividerHeight="10.0dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 

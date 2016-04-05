@@ -14,6 +14,7 @@ public class Post {
     public Post(String id, String texto, String imagemUrl) {
         this.id = id;
         this.texto = texto;
+        this.titulo = texto;
         this.imagemUrl = imagemUrl;
     }
 

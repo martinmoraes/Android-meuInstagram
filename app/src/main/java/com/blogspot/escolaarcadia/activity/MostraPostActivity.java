@@ -3,7 +3,6 @@ package com.blogspot.escolaarcadia.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,7 +32,7 @@ public class MostraPostActivity extends Activity {
         } else {
             Picasso.with(getApplicationContext())
                     .load(url)
-                    .error(R.mipmap.foto)
+                    .error(R.mipmap.fotoazul)
                     .into(imageView);
         }
     }

@@ -5,24 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@null</item>
-        <item name="metaButtonBarStyle">@style/ButtonBar</item>
-        <item name="metaButtonBarButtonStyle">@style/ButtonBarButton</item>
-    </style>
 
-    <!-- Backward-compatible version of ?android:attr/buttonBarStyle -->
-    <style name="ButtonBar">
-        <item name="android:paddingLeft">2dp</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingRight">2dp</item>
-        <item name="android:paddingBottom">0dp</item>
-        <item name="android:background">@android:drawable/bottom_bar</item>
-    </style>
-
-    <!-- Backward-compatible version of ?android:attr/buttonBarButtonStyle -->
-    <style name="ButtonBarButton" />
 
 
     <!-- Estilo criado para o botão enviar -->
@@ -31,7 +14,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:gravity">center</item>
-      <!--   <item name="android:layout_margin">3dp</item> -->
         <item name="android:textSize">22dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:shadowColor">#000000</item>
@@ -39,11 +21,6 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">2</item>
 
-      <!--   <item name="android:bottomLeftRadius">10dp</item>
-        <item name="android:bottomRightRadius">10dp</item>
-        <item name="android:topLeftRadius">10dp</item>
-        <item name="android:topRightRadius">10dp</item>
--->
 
     </style>
 

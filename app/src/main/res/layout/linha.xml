@@ -4,12 +4,7 @@
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:background="@drawable/post"
-               android:paddingTop="5dp"
-               android:paddingBottom="5dp"
-               android:paddingLeft="5dp"
-               android:paddingRight="5dp"
                android:orientation="vertical">
-
 
     <!-- Imagem -->
         <ImageView
@@ -17,12 +12,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="#CCCCCC"
-            android:src="@mipmap/fotobranco"/>
+            android:background="#CCCCCC"/>
 
-    <!-- Texto de envio -->
+    <!-- Texto -->
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/texto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
