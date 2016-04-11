@@ -47,7 +47,7 @@ public class InicialActivity extends TabActivity {
                             return false;
                         }
                     });
-                    mWebView.loadUrl("http://www.appviral.com.br");
+                    mWebView.loadUrl("http://appviral.com.br/listar.php");
                 }
             }
         });

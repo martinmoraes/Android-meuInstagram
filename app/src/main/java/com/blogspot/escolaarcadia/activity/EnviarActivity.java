@@ -109,8 +109,6 @@ public class EnviarActivity extends Activity {
             params.setForceMultipartEntityContentType(true);
             params.put("arq", myInputStream, "image.png");
             params.put("origem", "emJSON");
-
-            //params.put("arq", myInputStream);
             params.put("titulo", editText.getText().toString());
 
             AsyncHttpClient cliente = new AsyncHttpClient();
@@ -166,13 +164,6 @@ public class EnviarActivity extends Activity {
             Log.d("MEU_APP", "PASSOU em onSaveInstanceState sem URI!!!");
             outState.putString("fotoURI", "null");
         }
-
-
-
-        // salvando o texto antes da orientação ocorrer
-//        String texto = campoDeTexto.getText().toString();
-//        outState.putString("texto", texto);
-
     }
 
     @Override
@@ -186,9 +177,5 @@ public class EnviarActivity extends Activity {
         }else{
             Log.d("MEU_APP", "PASSOU em onRestoreInstanceState sem URI!!! ");
         }
-//         texto recuperado durante a transição de orientação de tela
-//        String texto = inState.getString("texto");
-//        campoDeTexto.setText(texto);
-
     }
 }
