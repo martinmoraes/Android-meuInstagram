@@ -85,7 +85,7 @@ public class RecebidosActivity extends Activity {
                 alertaBuilder.setNegativeButton("ABRIR",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
-                                String msg = ((TextView) view.findViewById(R.id.textView)).getText().toString();
+                                String msg = ((TextView) view.findViewById(R.id.texto)).getText().toString();
                                 String url = (((TextView) view.findViewById(R.id.imagemURL)).getText().toString());
                                 Intent intent = new Intent(context, MostraPostActivity.class);
                                 intent.putExtra("MSG", msg);

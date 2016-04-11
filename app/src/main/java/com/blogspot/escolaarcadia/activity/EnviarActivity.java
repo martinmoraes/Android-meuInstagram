@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -74,35 +75,40 @@ public class EnviarActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        UserPicture up = null;
         if (resultCode == RESULT_OK) {
             if (requestCode == FOTO_CAMERA) {
 //                imagemBitmap = (Bitmap) intent.getExtras().get("data");
-                up = new UserPicture(fotoURI, getContentResolver());
+//                up = new UserPicture(fotoURI, getContentResolver());
             } else if (requestCode == GALERIA_FOTO) {
-                up = new UserPicture(intent.getData(), getContentResolver());
+                fotoURI = intent.getData();
             }
-            try {
-                imagemView.setPadding(0, 0, 0, 0);
-                imagemBitmap = up.getBitmap();
-                imagemView.setImageBitmap(imagemBitmap);
-            } catch (IOException e) {
-                Log.e("GALERIA", "Falha ao carregar a imagem.", e);
-            }
+           mostraImagem();
         } else {
             Toast.makeText(this, "Operação cancelada.", Toast.LENGTH_SHORT).show();
         }
     }
 
+    private void mostraImagem(){
+        imagemView.setPadding(0, 0, 0, 0);
+        UserPicture up = new UserPicture(fotoURI, getContentResolver());
+        try {
+            imagemBitmap = up.getBitmap();
+        } catch (IOException e) {
+            Log.e("MEU_APP", "Falha ao carregar a imagem.", e);
+        }
+        imagemView.setImageBitmap(imagemBitmap);
+    }
 
     public void enviaMenssagem(View view) {
         if (imagemBitmap != null) {
+//            imagemBitmap = getResizedBitmap(imagemBitmap, 100, 100);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             imagemBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             InputStream myInputStream = new ByteArrayInputStream(stream.toByteArray());
             RequestParams params = new RequestParams();
             params.setForceMultipartEntityContentType(true);
             params.put("arq", myInputStream, "image.png");
+            params.put("origem", "emJSON");
 
             //params.put("arq", myInputStream);
             params.put("titulo", editText.getText().toString());
@@ -120,8 +126,8 @@ public class EnviarActivity extends Activity {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            Log.i("MEU_APP","statusCode:" + statusCode +"\n error: "+ error.toString());
-                            Toast.makeText(getApplication(), "Falha de comunicação!!!\n" + error.toString(), Toast.LENGTH_LONG).show();
+                            Log.i("MEU_APP", "statusCode: " + statusCode + "\n error: " + error.toString());
+                            Toast.makeText(getApplication(), "Falha de comunicação!!! " + error.toString(), Toast.LENGTH_LONG).show();
                         }
                     });
             Toast.makeText(this, "Enviando.", Toast.LENGTH_SHORT).show();
@@ -136,4 +142,53 @@ public class EnviarActivity extends Activity {
     }
 
 
+    public static Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+        // RECREATE THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(fotoURI != null) {
+            Log.d("MEU_APP", "PASSOU em onSaveInstanceState!!!" + fotoURI.toString());
+            outState.putString("fotoURI", fotoURI.toString());
+        }else {
+            Log.d("MEU_APP", "PASSOU em onSaveInstanceState sem URI!!!");
+            outState.putString("fotoURI", "null");
+        }
+
+
+
+        // salvando o texto antes da orientação ocorrer
+//        String texto = campoDeTexto.getText().toString();
+//        outState.putString("texto", texto);
+
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle inState) {
+        super.onRestoreInstanceState(inState);
+        String foto_uri = inState.getString("fotoURI");
+        if(!foto_uri.equals("null")) {
+            fotoURI = Uri.parse(foto_uri);
+            mostraImagem();
+            Log.d("MEU_APP", "PASSOU em onRestoreInstanceState!!! " + fotoURI.toString());
+        }else{
+            Log.d("MEU_APP", "PASSOU em onRestoreInstanceState sem URI!!! ");
+        }
+//         texto recuperado durante a transição de orientação de tela
+//        String texto = inState.getString("texto");
+//        campoDeTexto.setText(texto);
+
+    }
 }

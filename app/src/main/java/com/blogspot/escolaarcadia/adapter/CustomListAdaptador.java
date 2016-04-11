@@ -118,6 +118,7 @@ public class CustomListAdaptador extends BaseAdapter {
             if (!emRequisicao) {
                 this.povoaLocal = false;
                 AsyncHttpClient client = new AsyncHttpClient();
+                Log.i("MEU_APP", "getConnectTimeout:" + client.getConnectTimeout() + " getResponseTimeout: " + client.getResponseTimeout());
                 RequestParams param = new RequestParams();
                 param.put("origem", "emJSON");
                 param.put("id", idFilmeInicial);
@@ -177,8 +178,6 @@ public class CustomListAdaptador extends BaseAdapter {
                                 emRequisicao = false;
                                 povoaLocal();
                             }
-
-
                         });
                 emRequisicao = true;
 

@@ -8,7 +8,7 @@ import android.util.Log;
  * Created by Martin on 04/09/2015.
  */
 public class Comunicacao {
-    public static final String urlConsulta = "http://appviral.com.br/app/";
+    public static final String urlConsulta = "http://appviral.com.br/";
     public static final String urlEnviaPOST = urlConsulta + "inserir.php";
     public static final String urlExcluiPOST = urlConsulta + "excluir.php";
     public static final String urlListarPOST = urlConsulta + "listar.php";
